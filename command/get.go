@@ -2,14 +2,15 @@ package command
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 
 	"github.com/go-redis/redis"
 )
 
-func Get(client *redis.Client, key string) {
-	result, err := client.Get(key).Result()
+func Get(ctx context.Context, client *redis.Client, key string) {
+	result, err := client.WithContext(ctx).Get(key).Result()
 	if err != nil {
 		if err == redis.Nil {
 			fmt.Println("ERROR: key does not exists")

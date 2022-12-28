@@ -1,6 +1,7 @@
 package command
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"time"
@@ -8,9 +9,9 @@ import (
 	"github.com/go-redis/redis"
 )
 
-func Exit(client *redis.Client) {
+func Exit(ctx context.Context, client *redis.Client) {
 	fmt.Println("Closing connection...")
-	if err := client.Close(); err != nil {
+	if err := client.WithContext(ctx).Close(); err != nil {
 		panic(err)
 	}
 

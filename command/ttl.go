@@ -1,13 +1,14 @@
 package command
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/go-redis/redis"
 )
 
-func TTL(client *redis.Client, key string) {
-	result, err := client.TTL(key).Result()
+func TTL(ctx context.Context, client *redis.Client, key string) {
+	result, err := client.WithContext(ctx).TTL(key).Result()
 	if err != nil {
 		if err == redis.Nil {
 			fmt.Println("ERROR: key does not exists")

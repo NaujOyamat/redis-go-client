@@ -39,7 +39,7 @@ func main() {
 		panic(fmt.Errorf("redis client nil..."))
 	}
 
-	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGTERM, os.Interrupt, os.Kill)
 	defer cancel()
 
 	loop(ctx, client)
